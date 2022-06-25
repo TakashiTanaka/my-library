@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/* レスポンシブルなリボン */
+.ribbon {
+  --notch: 10px;
+  --bg-color: orange;
+  --text-color: white;
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.5em;
+  width: calc(100% - var(--notch) * 2);
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+.ribbon::before, .ribbon::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--notch) + 1px);
+  height: 100%;
+  background: var(--bg-color);
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 90% 50%);
+}
+.ribbon::before {
+  left: calc(var(--notch) * -1);
+}
+.ribbon::after {
+  right: calc(var(--notch) * -1);
+  transform: scaleX(-1);
+}

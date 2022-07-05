@@ -30,3 +30,33 @@
 		transform: scaleX(-1);
 	}
 }
+
+/* レスポンシブルな開き線のあしらい */
+.open-line {
+	--gap: 0.25em;
+	--line-weight: 2px;
+	--line-length: 1.5em;
+	--deg: 45deg;
+	--text-color: black;
+	--border-color: red;
+	color: var(--text-color);
+	display: flex;
+	align-items: center;
+	column-gap: var(--gap);
+
+	&::before, &::after {
+		content: '';
+		height: var(--line-weight);
+		width: var(--line-length);
+		background: var(--border-color);
+		vertical-align: bottom;
+	}
+	
+	&::before {
+		transform: rotate(var(--deg));
+	}
+	
+	&::after {
+		transform: rotate(calc(-1 * var(--deg)));
+	}
+}

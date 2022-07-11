@@ -1,62 +1,251 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 24px;
+  background: #d9d9d9;
+
+  // 白いボックス
+  & > section {
+    background: white;
+    box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.5);
+    padding: 24px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+
+    & > section:not(:first-of-type) {
+      border-top: solid 2px #d9d9d9;
+    }
+  }
+}
+
 /* レスポンシブルなリボン */
 .ribbon {
-	--notch: 10px;
-	--bg-color: orange;
-	--text-color: white;
-	background: var(--bg-color);
-	color: var(--text-color);
-	padding: 0.5em;
-	width: calc(100% - var(--notch) * 2);
-	margin: 0 auto;
-	position: relative;
-	box-sizing: border-box;
+  --notch: 10px;
+  --bg-color: orange;
+  --text-color: white;
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.5em;
+  width: calc(100% - var(--notch) * 2);
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
 
-	&::before, &::after {
-		content: '';
-		position: absolute;
-		width: calc(var(--notch) + 1px);
-		height: 100%;
-		background: var(--bg-color);
-		top: 0;
-		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 90% 50%);
-	}
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(var(--notch) + 1px);
+    height: 100%;
+    background: var(--bg-color);
+    top: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 90% 50%);
+  }
 
-	&::before {
-		left: calc(var(--notch) * -1);
-	}
+  &::before {
+    left: calc(var(--notch) * -1);
+  }
 
-	&::after {
-		right: calc(var(--notch) * -1);
-		transform: scaleX(-1);
-	}
+  &::after {
+    right: calc(var(--notch) * -1);
+    transform: scaleX(-1);
+  }
 }
 
 /* レスポンシブルな開き線のあしらい */
 .open-line {
-	--gap: 0.25em;
-	--line-weight: 2px;
-	--line-length: 1.5em;
-	--deg: 45deg;
-	--text-color: black;
-	--border-color: red;
-	color: var(--text-color);
-	display: flex;
-	align-items: center;
-	column-gap: var(--gap);
+  --gap: 0.25em;
+  --line-weight: 2px;
+  --line-length: 1.5em;
+  --deg: 45deg;
+  --text-color: black;
+  --border-color: red;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  column-gap: var(--gap);
 
-	&::before, &::after {
-		content: '';
-		height: var(--line-weight);
-		width: var(--line-length);
-		background: var(--border-color);
-		vertical-align: bottom;
-	}
-	
-	&::before {
-		transform: rotate(var(--deg));
-	}
-	
-	&::after {
-		transform: rotate(calc(-1 * var(--deg)));
-	}
+  &::before,
+  &::after {
+    content: "";
+    height: var(--line-weight);
+    width: var(--line-length);
+    background: var(--border-color);
+    vertical-align: bottom;
+  }
+
+  &::before {
+    transform: rotate(var(--deg));
+  }
+
+  &::after {
+    transform: rotate(calc(-1 * var(--deg)));
+  }
+}
+
+/* ----------------------------------
+   両端に水平線のライン
+  -----------------------------------*/
+
+.horizontal-line {
+  --gap: 0.25em;
+  --line-weight: 2px;
+  --line-length: 1.5em;
+  --line-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--gap);
+
+  &::before,
+  &::after {
+    content: "";
+    height: var(--line-weight);
+    width: var(--line-length);
+    background: var(--line-color);
+    vertical-align: bottom;
+  }
+}
+
+/* ----------------------------------
+   ボタン
+  -----------------------------------*/
+
+.btn {
+  --bg-color: orange;
+  --text-color: white;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: inline-block;
+  font-size: constrainValue(320px, 20px, 24px);
+  font-weight: font-weight(600);
+  line-height: line-height(1.3);
+  padding: 12px 1.5em;
+  position: relative;
+  text-align: center;
+  transition: opacity 0.3s;
+  width: 100%;
+  &:hover {
+    opacity: 0.7;
+  }
+
+  // ボーダー
+  &--border {
+    --border-color: #000;
+    border: solid 1px var(--border-color);
+  }
+
+  // 立体的
+  &--three-d {
+    --shadow-color: #920528;
+    --shadow-x: 0px;
+    --shadow-y: 4px;
+    box-shadow: var(--shadow-x) var(--shadow-y) 0 var(--shadow-color);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    &:hover {
+      box-shadow: 0px 0px var(--shadow-color);
+      opacity: 1;
+      transform: translateY(var(--shadow-y));
+    }
+  }
+
+  &--arrow {
+    --arrow-color: white;
+    --arrow-weight: 3px;
+    --arrow-right-margin: 16px;
+    --arrow-size: 12px;
+    &::after {
+      content: "";
+      width: var(--arrow-size);
+      height: var(--arrow-size);
+      position: absolute;
+      right: var(--arrow-right-margin);
+      top: 50%;
+      border-top: var(--arrow-weight) solid var(--arrow-color);
+      border-right: var(--arrow-weight) solid var(--arrow-color);
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  // 無効化
+  &--disabled {
+    --shadow-color: #6c6c6c;
+    --bg-color: gray;
+    pointer-events: none;
+  }
+}
+
+/* ----------------------------------
+   角丸ボタン
+  -----------------------------------*/
+
+.rounded-btn {
+  --bg-color: orange;
+  --text-color: white;
+  --round-radius: 8px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: inline-block;
+  font-size: constrainValue(320px, 20px, 24px);
+  font-weight: font-weight(600);
+  line-height: line-height(1.3);
+  padding: 12px 1.5em;
+  position: relative;
+  text-align: center;
+  transition: opacity 0.3s;
+  width: 100%;
+	border-radius: var(--round-radius);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  // ボーダー
+  &--border {
+    --border-color: #000;
+    border: solid 1px var(--border-color);
+  }
+
+  // 立体的
+  &--three-d {
+    --shadow-color: #920528;
+    --shadow-x: 0px;
+    --shadow-y: 4px;
+    box-shadow: var(--shadow-x) var(--shadow-y) 0 var(--shadow-color);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    &:hover {
+      box-shadow: 0px 0px var(--shadow-color);
+      opacity: 1;
+      transform: translateY(var(--shadow-y));
+    }
+  }
+
+  &--arrow {
+    --arrow-color: white;
+    --arrow-weight: 3px;
+    --arrow-right-margin: 16px;
+    --arrow-size: 12px;
+    &::after {
+      content: "";
+      width: var(--arrow-size);
+      height: var(--arrow-size);
+      position: absolute;
+      right: var(--arrow-right-margin);
+      top: 50%;
+      border-top: var(--arrow-weight) solid var(--arrow-color);
+      border-right: var(--arrow-weight) solid var(--arrow-color);
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  // 無効化
+  &--disabled {
+    --shadow-color: #6c6c6c;
+    --bg-color: gray;
+    pointer-events: none;
+  }
 }
